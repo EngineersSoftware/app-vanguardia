@@ -41,12 +41,12 @@
         </div>
       } @else {
         @for (user of users(); track user.id) {
-          <article appHoverEffect class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between cursor-default">
             <div>
-              <h3 class="font-bold text-slate-800 text-lg">{{ user.name }}</h3>
-              <p class="text-slate-500">{{ user.email }}</p>
+              <app-user-card
+              [userData]="user"
+              (deleteUser)="handleUserDeletion($event)"
+              ></app-user-card>
             </div>
-          </article>
         } @empty {
           <div class="p-10 text-center bg-slate-50 rounded-xl border border-slate-200 border-dashed">
             <p class="text-slate-500">El sistema no registra usuarios actualmente.</p>

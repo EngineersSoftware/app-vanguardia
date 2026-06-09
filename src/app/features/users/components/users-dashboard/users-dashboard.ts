@@ -4,11 +4,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user';
 import { User } from '../../models/user';
 import { HoverEffectDirective } from '../../../../shared/directives/hover-effect';
+import { UserCardComponent } from '../user-card/user-card';
 
 @Component({
   selector: 'app-users-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HoverEffectDirective],
+  imports: [CommonModule, ReactiveFormsModule, HoverEffectDirective, UserCardComponent],
   templateUrl: './users-dashboard.html',
 })
 export class UsersDashboardComponent implements OnInit {
@@ -26,8 +27,10 @@ export class UsersDashboardComponent implements OnInit {
 
   totalUsers = computed(() => this.users().length);
 
-  ngOnInit(): void {
-    this.loadUsers();
+  ngOnInit() {
+    this.UserService.getUser().subscribe( data => {
+      this.users.set(data.slice(0, 5));
+    });
   }
 
   loadUsers(): void {
@@ -57,6 +60,10 @@ export class UsersDashboardComponent implements OnInit {
         }
       })
     }
+  }
+
+  handleUserDeletion(idToDelete: number){
+    this.users.update(currentUsers => currentUsers.filter(user => user.id !== idToDelete));
   }
 
 }
