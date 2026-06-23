@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -11,12 +10,9 @@ import { User } from '../models/user';
 export class UserService {
 
   private http = inject(HttpClient);
+  private apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
   getUser(): Observable<User[]> {
-    return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users');
-  }
-
-  createUser(user: User): Observable<User> {
-    return this.http.post<User>('https://jsonplaceholder.typicode.com/users', user);
+    return this.http.get<User[]>(this.apiUrl);
   }
 }
